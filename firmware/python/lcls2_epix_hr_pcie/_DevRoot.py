@@ -14,7 +14,7 @@ import click
 
 import axipcie
 
-import lcls2_pgp_pcie_apps     as pcieApp
+import lcls2_epix_hr_pcie      as pcieApp
 import lcls2_pgp_fw_lib.shared as shared
 import l2si_core               as l2si
 import surf.protocols.batcher  as batcher
