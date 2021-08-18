@@ -89,7 +89,7 @@ begin
             INT_WIDTH_SELECT_G  => "CUSTOM",
             INT_DATA_WIDTH_G    => 8,   -- 64-bit
             FIFO_ADDR_WIDTH_G   => 9,   -- 512 sample = 2^9
-            CASCADE_SIZE_G      => 16,  -- 2^9 x 64-bit x 16 cascade = 524kb buffer
+            CASCADE_SIZE_G      => 32,  -- 2^9 x 64-bit x 32 cascade = 1048kb buffer
             -- AXI Stream Port Configurations
             SLAVE_AXI_CONFIG_G  => DMA_AXIS_CONFIG_G,
             MASTER_AXI_CONFIG_G => DMA_AXIS_CONFIG_G)
