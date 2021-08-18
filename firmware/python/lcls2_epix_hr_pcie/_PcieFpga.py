@@ -16,9 +16,10 @@ import lcls2_pgp_fw_lib.shared as shared
 
 class PcieFpga(pr.Device):
     def __init__(self,
-                 pgp4     = False,
-                 enLclsI  = True,
-                 enLclsII = False,
+                 pgp4      = False,
+                 enLclsI   = True,
+                 enLclsII  = False,
+                 boardType = None,
                  **kwargs):
         super().__init__(**kwargs)
 
@@ -26,6 +27,7 @@ class PcieFpga(pr.Device):
         self.add(pcie.AxiPcieCore(
             offset      = 0x0000_0000,
             numDmaLanes = 1,
+            boardType   = boardType,
             expand      = False,
         ))
 

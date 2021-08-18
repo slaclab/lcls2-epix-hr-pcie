@@ -202,9 +202,9 @@ $ source setup_env_slac.sh
 $ python scripts/devGui --pgp4 IS_PGP4_BOOL
 ```
 
-# Example of starting up with PGP4 (instead of PGP2b) and stand alone mode (locally generated timing)
+# Example of starting up KCU1500 with PGP4 and stand alone mode (locally generated timing)
 ```
-$ python scripts/devGui.py --pgp4 1 --standAloneMode 1
+$ python scripts/devGui.py --pcieBoardType Kcu1500 --pgp4 1 --standAloneMode 1
 Then execute the StartRun() command to start the triggering
 ```
 

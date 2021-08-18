@@ -35,6 +35,7 @@ class DevRoot(shared.Root):
                  pgp4           = False, # true = PGPv4, false = PGP2b
                  pollEn         = True,  # Enable automatic polling registers
                  initRead       = True,  # Read all registers at start of the system
+                 pcieBoardType  = None,
                  **kwargs):
 
         # Set the firmware Version lock = firmware/targets/shared_version.mk
@@ -71,12 +72,13 @@ class DevRoot(shared.Root):
 
         # Instantiate the top level Device and pass it the memory map
         self.add(pcieApp.PcieFpga(
-            name     = 'DevPcie',
-            memBase  = self.memMap,
-            pgp4     = pgp4,
-            enLclsI  = enLclsI,
-            enLclsII = enLclsII,
-            expand   = True,
+            name      = 'DevPcie',
+            memBase   = self.memMap,
+            pgp4      = pgp4,
+            enLclsI   = enLclsI,
+            enLclsII  = enLclsII,
+            boardType = pcieBoardType,
+            expand    = True,
         ))
 
         self.add(pr.LocalVariable(
@@ -131,10 +133,10 @@ class DevRoot(shared.Root):
     def start(self, **kwargs):
         super().start(**kwargs)
 
-        # Hide all the "enable" variables
-        for enableList in self.find(typ=pr.EnableVariable):
-            # Hide by default
-            enableList.hidden = True
+#        # Hide all the "enable" variables
+#        for enableList in self.find(typ=pr.EnableVariable):
+#            # Hide by default
+#            enableList.hidden = True
 
         # Check if not simulation
         if self.sim is False:

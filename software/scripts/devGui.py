@@ -131,6 +131,15 @@ if __name__ == "__main__":
         help     = "Sets the GUI type (PyDM or PyQt)",
     )
 
+    parser.add_argument(
+        "--pcieBoardType",
+        type     = str,
+        required = False,
+        default  = None,
+        help     = "define the type of PCIe card, used to select I2C mapping. Options: [none or SlacPgpCardG4 or Kcu1500]",
+    )
+
+
     # Get the arguments
     args = parser.parse_args()
 
@@ -169,6 +178,7 @@ if __name__ == "__main__":
             yamlFileLclsII = args.yamlFileLclsII,
             startupMode    = args.startupMode,
             standAloneMode = args.standAloneMode,
+            pcieBoardType  = args.pcieBoardType,
         ) as root:
 
         ######################
