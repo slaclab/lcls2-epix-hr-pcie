@@ -1,0 +1,63 @@
+
+GitBase: ..
+
+TopRoguePackage: lcls2_epix_hr_pcie
+
+RoguePackages:
+  - submodules/axi-pcie-core/python
+  - submodules/clink-gateway-fw-lib/python
+  - submodules/l2si-core/python
+  - submodules/lcls2-pgp-fw-lib/python
+  - submodules/lcls-timing-core/python
+  - submodules/surf/python
+  - python 
+
+RogueConfig:
+  - ../software/config
+
+RogueScripts:
+#  - ../software/scripts/devGui
+
+Targets:
+################################################################################  
+  Lcls2EpixHrSlacPgpCardG4Pgp2b:
+    ImageDir: targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp2b/images
+    Extensions:
+      - mcs
+  Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps:
+    ImageDir: targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps/images
+    Extensions:
+      - mcs
+  Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps:
+    ImageDir: targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps/images
+    Extensions:
+      - mcs
+################################################################################        
+  Lcls2EpixHrXilinxKcu1500Pgp2b:
+    ImageDir: targets/XilinxKcu1500/Lcls2EpixHrXilinxKcu1500Pgp2b/images
+    Extensions:
+      - mcs
+  Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps:
+    ImageDir: targets/XilinxKcu1500/Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps/images
+    Extensions:
+      - mcs
+  Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps:
+    ImageDir: targets/XilinxKcu1500/Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps/images
+    Extensions:
+      - mcs
+################################################################################        
+Releases:
+  all:
+    Primary: True
+    Targets:
+      #######################################
+      - Lcls2EpixHrSlacPgpCardG4Pgp2b
+      - Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps
+      - Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps
+      #######################################
+      - Lcls2EpixHrXilinxKcu1500Pgp2b
+      - Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps
+      - Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps
+      #######################################
+    Types:
+      - Rogue
