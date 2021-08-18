@@ -92,14 +92,6 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--dataVc",
-        type     = int,
-        required = False,
-        default  = 1,
-        help     = "VC used for the data path",
-    )
-
-    parser.add_argument(
         "--pollEn",
         type     = argBool,
         required = False,
@@ -171,7 +163,6 @@ if __name__ == "__main__":
             pollEn         = args.pollEn,
             initRead       = args.initRead,
             pgp4           = args.pgp4,
-            dataVc         = args.dataVc,
             enLclsI        = (args.enLclsII or not args.startupMode),
             enLclsII       = (args.enLclsII or args.startupMode),
             yamlFileLclsI  = args.yamlFileLclsI,
@@ -185,7 +176,11 @@ if __name__ == "__main__":
         ######################
         if (args.guiType == 'PyDM'):
 
-            pyrogue.pydm.runPyDM(root=root)
+            pyrogue.pydm.runPyDM(
+                root  = root,
+                sizeX = 800,
+                sizeY = 800,
+            )
 
         #################
         # Legacy PyQT GUI
@@ -196,7 +191,7 @@ if __name__ == "__main__":
             appTop = pyrogue.gui.application(sys.argv)
             guiTop = pyrogue.gui.GuiTop()
             guiTop.addTree(root)
-            guiTop.resize(800, 1000)
+            guiTop.resize(800, 800)
 
             # Run gui
             appTop.exec_()

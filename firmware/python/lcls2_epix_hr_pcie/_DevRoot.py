@@ -33,7 +33,6 @@ class DevRoot(shared.Root):
                  startupMode    = False, # False = LCLS-I timing mode, True = LCLS-II timing mode
                  standAloneMode = False, # False = using fiber timing, True = locally generated timing
                  pgp4           = False, # true = PGPv4, false = PGP2b
-                 dataVc         = 1,
                  pollEn         = True,  # Enable automatic polling registers
                  initRead       = True,  # Read all registers at start of the system
                  **kwargs):
@@ -44,7 +43,6 @@ class DevRoot(shared.Root):
         # Set local variables
         self.startupMode    = startupMode
         self.standAloneMode = standAloneMode
-        self.dataVc         = dataVc
         self.yamlFileLclsI  = yamlFileLclsI
         self.yamlFileLclsII = yamlFileLclsII
 
