@@ -172,7 +172,7 @@ https://docs.google.com/document/d/1B_sIkk9Fxsw2EjOBpGVFpfCCWoIiOJoVGTrkTshZfew/
 
 1) Setup the rogue environment
 ```
-$ cd cameralink-gateway/software
+$ cd lcls2-epix-hr-pcie/software
 $ source setup_env_slac.sh
 ```
 
@@ -193,7 +193,7 @@ sudo reboot
 
 1) Setup the rogue environment
 ```
-$ cd cameralink-gateway/software
+$ cd lcls2-epix-hr-pcie/software
 $ source setup_env_slac.sh
 ```
 
@@ -209,3 +209,4 @@ Then execute the StartRun() command to start the triggering
 ```
 
 <!--- ######################################################## -->
+
