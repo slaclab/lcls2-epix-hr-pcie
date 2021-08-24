@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--pgp4",
         type     = argBool,
-        required = True,
+        required = True, # Default: PGPv4
         help     = "true = PGPv4, false = PGP2b",
     )
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         "--enLclsII",
         type     = argBool,
         required = False,
-        default  = False, # Default: Disable LCLS-II hardware registers
+        default  = True, # Default: Enable LCLS-II hardware registers
         help     = "Enable LCLS-II hardware registers",
     )
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         "--startupMode",
         type     = argBool,
         required = False,
-        default  = False, # Default: False = LCLS-I timing mode
+        default  = True, # Default: True = LCLS-II timing mode
         help     = "False = LCLS-I timing mode, True = LCLS-II timing mode",
     )
 

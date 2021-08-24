@@ -32,9 +32,20 @@ class DataDebug(rogue.interfaces.stream.Slave):
         self.name = name
         self.enPrint = enPrint
 
+############################################################################
+#         TDEST_ROUTES_G => (
+#            0           => "0000000-",  -- Trig on 0x0, Event on 0x1
+#            1           => x"02",       -- Map Timing          to TDEST 0x2
+#            2           => x"03",       -- Map PGP[Lane0][VC1] to TDEST 0x3
+#            3           => x"04",       -- Map PGP[Lane1][VC1] to TDEST 0x4
+#            4           => x"05",       -- Map PGP[Lane2][VC1] to TDEST 0x5
+#            5           => x"06"),      -- Map PGP[Lane3][VC1] to TDEST 0x6
+############################################################################
+
     def _acceptFrame(self, frame):
         channel = frame.getChannel()
 
+        # Check for L2SI message
         if channel == 0 or channel == 1:
             if self.enPrint:
                 print('-------------------------')
@@ -45,7 +56,8 @@ class DataDebug(rogue.interfaces.stream.Slave):
                     print('-------------------------')
                     print()
 
-        if channel == 2:
+        # Check for camera message (ch=[3:7])
+        if channel >= 3:
             frameSize = frame.getPayload()
             ba = bytearray(frameSize)
             frame.read(ba, 0)

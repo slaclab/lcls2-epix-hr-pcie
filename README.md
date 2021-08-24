@@ -19,14 +19,14 @@
 $ git lfs install
 ```
 
-5) Verify that you have git version 2.13.0 (or later) installed 
+5) Verify that you have git version 2.13.0 (or later) installed
 
 ```
 $ git version
 git version 2.13.0
 ```
 
-6) Verify that you have git-lfs version 2.1.1 (or later) installed 
+6) Verify that you have git-lfs version 2.1.1 (or later) installed
 
 ```
 $ git-lfs version
@@ -204,7 +204,7 @@ $ python scripts/devGui --pgp4 IS_PGP4_BOOL
 
 # Example of starting up KCU1500 with PGP4 and stand alone mode (locally generated timing)
 ```
-$ python scripts/devGui.py --pcieBoardType Kcu1500 --pgp4 1 --standAloneMode 1
+$ python scripts/devGui.py --pcieBoardType Kcu1500 --yamlFileLclsII config/defaults_LCLS-II.yml --standAloneMode 1
 Then execute the StartRun() command to start the triggering
 ```
 
