@@ -193,7 +193,7 @@ sudo reboot
 
 1) Setup the rogue environment
 ```
-$ cd cameralink-gateway/software
+$ cd lcls2-epix-hr-pcie/software
 $ source setup_env_slac.sh
 ```
 
