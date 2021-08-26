@@ -50,9 +50,19 @@ class DataDebug(rogue.interfaces.stream.Slave):
             ba = bytearray(frameSize)
             frame.read(ba, 0)
             if self.enPrint:
-                print(f"Raw camera data channel - {len(ba)} bytes")
+                print(f"Raw timing data channel 2 - {len(ba)} bytes")
                 print(frame.getNumpy(0, frameSize))
                 print('-------------------------')
+
+        if channel == 3:
+            frameSize = frame.getPayload()
+            ba = bytearray(frameSize)
+            frame.read(ba, 0)
+            if self.enPrint:
+                print(f"Raw camera data channel 3- {len(ba)} bytes")
+                print(frame.getNumpy(0, frameSize))
+                print('-------------------------')            
+            
         if self.enPrint:
             print()
 
@@ -65,7 +75,7 @@ class myRoot(pr.Root):
 
         # Create arrays to be filled
         self.dmaStreams = [None for lane in range(4)]
-        self._dbg       = [DataDebug(name='DataDebug',enPrint=False) for lane in range(4)]
+        self._dbg       = [DataDebug(name='DataDebug',enPrint=True) for lane in range(4)]
         self.unbatchers = [rogue.protocols.batcher.SplitterV1() for lane in range(4)]
 
         # Connect the streams
