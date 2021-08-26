@@ -51,13 +51,13 @@ Releases:
     Primary: True
     Targets:
       #######################################
-      - Lcls2EpixHrSlacPgpCardG4Pgp2b
+      # - Lcls2EpixHrSlacPgpCardG4Pgp2b
       - Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps
-      - Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps
+      # - Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps
       #######################################
-      - Lcls2EpixHrXilinxKcu1500Pgp2b
+      # - Lcls2EpixHrXilinxKcu1500Pgp2b
       - Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps
-      - Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps
+      # - Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps
       #######################################
     Types:
       - Rogue
