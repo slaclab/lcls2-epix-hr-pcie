@@ -3,5 +3,5 @@ export PRJ_VERSION = 0x01010000
 
 # Define release
 ifndef RELEASE
-export RELEASE = all
+export RELEASE = lcls2_epix_hr_pcie
 endif
