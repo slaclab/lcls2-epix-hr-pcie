@@ -39,7 +39,7 @@ class DevRoot(shared.Root):
                  **kwargs):
 
         # Set the firmware Version lock = firmware/targets/shared_version.mk
-        self.FwVersionLock = 0x01010000
+        self.FwVersionLock = 0x01020000
 
         # Set local variables
         self.startupMode    = startupMode
