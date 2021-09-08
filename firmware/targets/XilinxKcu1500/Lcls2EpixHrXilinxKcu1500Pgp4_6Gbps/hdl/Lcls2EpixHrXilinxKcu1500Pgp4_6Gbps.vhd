@@ -148,7 +148,7 @@ begin
          TPD_G             => TPD_G,
          SIMULATION_G      => ROGUE_SIM_EN_G,
          TYPE_G            => "PLL",
-         INPUT_BUFG_G      => true,
+         INPUT_BUFG_G      => false,
          FB_BUFG_G         => true,
          RST_IN_POLARITY_G => '1',
          NUM_CLOCKS_G      => 2,
@@ -305,6 +305,7 @@ begin
          --  Top Level Interfaces
          ------------------------
          -- Reference Clock and Reset
+         userClk156            => userClk156,
          userClk25             => userClk25,
          userRst25             => userRst25,
          -- AXI-Lite Interface (axilClk domain)
