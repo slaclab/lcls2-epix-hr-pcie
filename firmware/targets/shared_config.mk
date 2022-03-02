@@ -1,5 +1,5 @@
-# Define Firmware Version: v1.2.0.0
-export PRJ_VERSION = 0x01020000
+# Define Firmware Version: v1.3.0.0
+export PRJ_VERSION = 0x01030000
 
 #Use PGP4 Timing
 export INCLUDE_PGP4_6G = 1
