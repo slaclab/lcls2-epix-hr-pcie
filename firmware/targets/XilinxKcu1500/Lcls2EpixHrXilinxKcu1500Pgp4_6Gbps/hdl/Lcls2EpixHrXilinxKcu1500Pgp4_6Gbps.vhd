@@ -1,8 +1,6 @@
 -------------------------------------------------------------------------------
 -- Company    : SLAC National Accelerator Laboratory
 -------------------------------------------------------------------------------
--- Description: Camera link gateway PCIe card with PGPv2b
--------------------------------------------------------------------------------
 -- This file is part of 'lcls2-epix-hr-pcie'.
 -- It is subject to the license terms in the LICENSE.txt file found in the
 -- top-level directory of this distribution and at:
