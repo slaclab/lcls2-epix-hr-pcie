@@ -23,6 +23,8 @@ use surf.SsiPkg.all;
 library lcls2_pgp_fw_lib;
 
 library axi_pcie_core;
+use axi_pcie_core.AxiPciePkg.all;
+use axi_pcie_core.MigPkg.all;
 
 library unisim;
 use unisim.vcomponents.all;
@@ -52,6 +54,11 @@ entity Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps is
       qsfp1RxN     : in    slv(3 downto 0);
       qsfp1TxP     : out   slv(3 downto 0);
       qsfp1TxN     : out   slv(3 downto 0);
+      -- DDR Ports
+      ddrClkP      : in    slv(3 downto 0);
+      ddrClkN      : in    slv(3 downto 0);
+      ddrOut       : out   DdrOutArray(3 downto 0);
+      ddrInOut     : inout DdrInOutArray(3 downto 0);
       --------------
       --  Core Ports
       --------------
@@ -95,12 +102,24 @@ architecture top_level of Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps is
    constant DMA_SIZE_C        : positive            := 1;
    constant NUM_PGP_LANES_C   : positive            := 4;
 
-   constant NUM_AXIL_MASTERS_C : positive := 2;
+   constant BUFF_INDEX_C       : natural  := 0;
+   constant HW_INDEX_C         : natural  := 1;
+   constant APP_INDEX_C        : natural  := 2;
+   constant NUM_AXIL_MASTERS_C : positive := 3;
 
-   constant HW_INDEX_C  : natural := 0;
-   constant APP_INDEX_C : natural := 1;
-
-   constant AXIL_CONFIG_C : AxiLiteCrossbarMasterConfigArray(NUM_AXIL_MASTERS_C-1 downto 0) := genAxiLiteConfig(NUM_AXIL_MASTERS_C, x"0080_0000", 23, 22);
+   constant AXIL_CONFIG_C : AxiLiteCrossbarMasterConfigArray(NUM_AXIL_MASTERS_C-1 downto 0) := (
+      0               => (
+         baseAddr     => x"0010_0000",
+         addrBits     => 20,
+         connectivity => x"FFFF"),
+      1               => (
+         baseAddr     => x"0080_0000",
+         addrBits     => 22,
+         connectivity => x"FFFF"),
+      2               => (
+         baseAddr     => x"00C0_0000",
+         addrBits     => 22,
+         connectivity => x"FFFF"));
 
    signal userClk156 : sl;
    signal userClk25  : sl;
@@ -117,12 +136,22 @@ architecture top_level of Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps is
    signal axilWriteMasters : AxiLiteWriteMasterArray(NUM_AXIL_MASTERS_C-1 downto 0);
    signal axilWriteSlaves  : AxiLiteWriteSlaveArray(NUM_AXIL_MASTERS_C-1 downto 0);
 
-   signal dmaClk       : sl;
-   signal dmaRst       : sl;
-   signal dmaObMasters : AxiStreamMasterArray(DMA_SIZE_C-1 downto 0) := (others => AXI_STREAM_MASTER_INIT_C);
-   signal dmaObSlaves  : AxiStreamSlaveArray(DMA_SIZE_C-1 downto 0)  := (others => AXI_STREAM_SLAVE_FORCE_C);
-   signal dmaIbMasters : AxiStreamMasterArray(DMA_SIZE_C-1 downto 0) := (others => AXI_STREAM_MASTER_INIT_C);
-   signal dmaIbSlaves  : AxiStreamSlaveArray(DMA_SIZE_C-1 downto 0)  := (others => AXI_STREAM_SLAVE_FORCE_C);
+   signal dmaClk        : sl;
+   signal dmaRst        : sl;
+   signal dmaObMasters  : AxiStreamMasterArray(DMA_SIZE_C-1 downto 0) := (others => AXI_STREAM_MASTER_INIT_C);
+   signal dmaObSlaves   : AxiStreamSlaveArray(DMA_SIZE_C-1 downto 0)  := (others => AXI_STREAM_SLAVE_FORCE_C);
+   signal dmaIbMasters  : AxiStreamMasterArray(DMA_SIZE_C-1 downto 0) := (others => AXI_STREAM_MASTER_INIT_C);
+   signal dmaIbSlaves   : AxiStreamSlaveArray(DMA_SIZE_C-1 downto 0)  := (others => AXI_STREAM_SLAVE_FORCE_C);
+   signal buffIbMasters : AxiStreamMasterArray(DMA_SIZE_C-1 downto 0) := (others => AXI_STREAM_MASTER_INIT_C);
+   signal buffIbSlaves  : AxiStreamSlaveArray(DMA_SIZE_C-1 downto 0)  := (others => AXI_STREAM_SLAVE_FORCE_C);
+
+   signal ddrClk          : slv(3 downto 0);
+   signal ddrRst          : slv(3 downto 0);
+   signal ddrReady        : slv(3 downto 0);
+   signal ddrWriteMasters : AxiWriteMasterArray(3 downto 0);
+   signal ddrWriteSlaves  : AxiWriteSlaveArray(3 downto 0);
+   signal ddrReadMasters  : AxiReadMasterArray(3 downto 0);
+   signal ddrReadSlaves   : AxiReadSlaveArray(3 downto 0);
 
    signal pgpIbMasters : AxiStreamMasterArray(NUM_PGP_LANES_C-1 downto 0)     := (others => AXI_STREAM_MASTER_INIT_C);
    signal pgpIbSlaves  : AxiStreamSlaveArray(NUM_PGP_LANES_C-1 downto 0)      := (others => AXI_STREAM_SLAVE_FORCE_C);
@@ -232,6 +261,28 @@ begin
          pciTxP         => pciTxP,
          pciTxN         => pciTxN);
 
+   --------------------
+   -- MIG[3:0] IP Cores
+   --------------------
+   U_Mig : entity axi_pcie_core.MigAll
+      generic map (
+         TPD_G => TPD_G)
+      port map (
+         extRst          => dmaRst,
+         -- AXI MEM Interface
+         axiClk          => ddrClk,
+         axiRst          => ddrRst,
+         axiReady        => ddrReady,
+         axiWriteMasters => ddrWriteMasters,
+         axiWriteSlaves  => ddrWriteSlaves,
+         axiReadMasters  => ddrReadMasters,
+         axiReadSlaves   => ddrReadSlaves,
+         -- DDR Ports
+         ddrClkP         => ddrClkP,
+         ddrClkN         => ddrClkN,
+         ddrOut          => ddrOut,
+         ddrInOut        => ddrInOut);
+
    ---------------------
    -- AXI-Lite Crossbar
    ---------------------
@@ -252,6 +303,39 @@ begin
          mAxiWriteSlaves     => axilWriteSlaves,
          mAxiReadMasters     => axilReadMasters,
          mAxiReadSlaves      => axilReadSlaves);
+
+   U_MigDmaBuffer : entity axi_pcie_core.MigDmaBuffer
+      generic map (
+         TPD_G             => TPD_G,
+         DMA_SIZE_G        => DMA_SIZE_C,
+         DMA_AXIS_CONFIG_G => DMA_AXIS_CONFIG_C,
+         AXIL_BASE_ADDR_G  => AXIL_CONFIG_C(BUFF_INDEX_C).baseAddr)
+      port map (
+         -- AXI-Lite Interface (axilClk domain)
+         axilClk          => axilClk,
+         axilRst          => axilRst,
+         axilReadMaster   => axilReadMasters(BUFF_INDEX_C),
+         axilReadSlave    => axilReadSlaves(BUFF_INDEX_C),
+         axilWriteMaster  => axilWriteMasters(BUFF_INDEX_C),
+         axilWriteSlave   => axilWriteSlaves(BUFF_INDEX_C),
+         -- Trigger Event streams (eventClk domain)
+         eventClk         => axilClk,
+         eventTrigMsgCtrl => eventTrigMsgCtrl,
+         -- AXI Stream Interface (axisClk domain)
+         axisClk          => dmaClk,
+         axisRst          => dmaRst,
+         sAxisMasters     => buffIbMasters,
+         sAxisSlaves      => buffIbSlaves,
+         mAxisMasters     => dmaIbMasters,
+         mAxisSlaves      => dmaIbSlaves,
+         -- DDR AXI MEM Interface
+         ddrClk           => ddrClk,
+         ddrRst           => ddrRst,
+         ddrReady         => ddrReady,
+         ddrWriteMasters  => ddrWriteMasters,
+         ddrWriteSlaves   => ddrWriteSlaves,
+         ddrReadMasters   => ddrReadMasters,
+         ddrReadSlaves    => ddrReadSlaves);
 
    U_App : entity work.Application
       generic map (
@@ -281,8 +365,8 @@ begin
          dmaRst               => dmaRst,
          dmaObMaster          => dmaObMasters(0),
          dmaObSlave           => dmaObSlaves(0),
-         dmaIbMaster          => dmaIbMasters(0),
-         dmaIbSlave           => dmaIbSlaves(0));
+         dmaIbMaster          => buffIbMasters(0),
+         dmaIbSlave           => buffIbSlaves(0));
 
    ------------------
    -- Hardware Module

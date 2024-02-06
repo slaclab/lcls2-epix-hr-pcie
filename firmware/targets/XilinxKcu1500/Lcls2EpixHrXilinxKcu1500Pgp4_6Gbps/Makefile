@@ -1,3 +1,5 @@
+export PARALLEL_SYNTH = 1
+
 #Use PGP4 Timing
 export INCLUDE_PGP4_6G = 1
 
