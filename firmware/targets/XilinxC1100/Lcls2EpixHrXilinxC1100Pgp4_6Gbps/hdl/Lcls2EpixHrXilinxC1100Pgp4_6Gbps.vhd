@@ -286,25 +286,25 @@ begin
          AXIL_BASE_ADDR_G  => AXIL_CONFIG_C(BUFF_INDEX_C).baseAddr)
       port map (
          -- HBM Interface
-         hbmRefClk        => hbmRefClk,
-         hbmCatTrip       => hbmCatTrip,
+         hbmRefClk           => hbmRefClk,
+         hbmCatTrip          => hbmCatTrip,
          -- AXI-Lite Interface (axilClk domain)
-         axilClk          => axilClk,
-         axilRst          => axilRst,
-         axilReadMaster   => axilReadMasters(BUFF_INDEX_C),
-         axilReadSlave    => axilReadSlaves(BUFF_INDEX_C),
-         axilWriteMaster  => axilWriteMasters(BUFF_INDEX_C),
-         axilWriteSlave   => axilWriteSlaves(BUFF_INDEX_C),
+         axilClk             => axilClk,
+         axilRst             => axilRst,
+         axilReadMaster      => axilReadMasters(BUFF_INDEX_C),
+         axilReadSlave       => axilReadSlaves(BUFF_INDEX_C),
+         axilWriteMaster     => axilWriteMasters(BUFF_INDEX_C),
+         axilWriteSlave      => axilWriteSlaves(BUFF_INDEX_C),
          -- Trigger Event streams (eventClk domain)
-         eventClk         => axilClk,
-         eventTrigMsgCtrl => eventTrigMsgCtrl,
+         eventClk            => axilClk,
+         eventTrigMsgCtrl(0) => eventTrigMsgCtrl(0),
          -- AXI Stream Interface (axisClk domain)
-         axisClk          => dmaClk,
-         axisRst          => dmaRst,
-         sAxisMasters     => buffIbMasters,
-         sAxisSlaves      => buffIbSlaves,
-         mAxisMasters     => dmaIbMasters,
-         mAxisSlaves      => dmaIbSlaves);
+         axisClk             => dmaClk,
+         axisRst             => dmaRst,
+         sAxisMasters        => buffIbMasters,
+         sAxisSlaves         => buffIbSlaves,
+         mAxisMasters        => dmaIbMasters,
+         mAxisSlaves         => dmaIbSlaves);
 
    U_App : entity work.Application
       generic map (

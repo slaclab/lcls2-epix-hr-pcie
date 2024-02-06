@@ -83,7 +83,8 @@ architecture top_level of Lcls2EpixHrXilinxC1100Pgp4_10Gbps is
 
    constant DMA_AXIS_CONFIG_C : AxiStreamConfigType := ssiAxiStreamConfig(8, TKEEP_COMP_C, TUSER_FIRST_LAST_C, 8, 2);  -- 64-bit interface
    constant AXIL_CLK_FREQ_C   : real                := 156.25E+6;  -- units of Hz
-   constant DMA_SIZE_C        : positive            := 4;
+   constant DMA_SIZE_C        : positive            := 1;
+   constant NUM_PGP_LANES_C   : positive            := 4;
 
    constant BUFF_INDEX_C       : natural  := 0;
    constant HW_INDEX_C         : natural  := 1;
@@ -285,25 +286,25 @@ begin
          AXIL_BASE_ADDR_G  => AXIL_CONFIG_C(BUFF_INDEX_C).baseAddr)
       port map (
          -- HBM Interface
-         hbmRefClk        => hbmRefClk,
-         hbmCatTrip       => hbmCatTrip,
+         hbmRefClk           => hbmRefClk,
+         hbmCatTrip          => hbmCatTrip,
          -- AXI-Lite Interface (axilClk domain)
-         axilClk          => axilClk,
-         axilRst          => axilRst,
-         axilReadMaster   => axilReadMasters(BUFF_INDEX_C),
-         axilReadSlave    => axilReadSlaves(BUFF_INDEX_C),
-         axilWriteMaster  => axilWriteMasters(BUFF_INDEX_C),
-         axilWriteSlave   => axilWriteSlaves(BUFF_INDEX_C),
+         axilClk             => axilClk,
+         axilRst             => axilRst,
+         axilReadMaster      => axilReadMasters(BUFF_INDEX_C),
+         axilReadSlave       => axilReadSlaves(BUFF_INDEX_C),
+         axilWriteMaster     => axilWriteMasters(BUFF_INDEX_C),
+         axilWriteSlave      => axilWriteSlaves(BUFF_INDEX_C),
          -- Trigger Event streams (eventClk domain)
-         eventClk         => axilClk,
-         eventTrigMsgCtrl => eventTrigMsgCtrl,
+         eventClk            => axilClk,
+         eventTrigMsgCtrl(0) => eventTrigMsgCtrl(0),
          -- AXI Stream Interface (axisClk domain)
-         axisClk          => dmaClk,
-         axisRst          => dmaRst,
-         sAxisMasters     => buffIbMasters,
-         sAxisSlaves      => buffIbSlaves,
-         mAxisMasters     => dmaIbMasters,
-         mAxisSlaves      => dmaIbSlaves);
+         axisClk             => dmaClk,
+         axisRst             => dmaRst,
+         sAxisMasters        => buffIbMasters,
+         sAxisSlaves         => buffIbSlaves,
+         mAxisMasters        => dmaIbMasters,
+         mAxisSlaves         => dmaIbSlaves);
 
    U_App : entity work.Application
       generic map (
