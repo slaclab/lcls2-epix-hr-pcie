@@ -20,15 +20,6 @@ RogueScripts:
 
 Targets:
 ################################################################################
-  Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps:
-    ImageDir: targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps/images
-    Extensions:
-      - mcs
-  Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps:
-    ImageDir: targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps/images
-    Extensions:
-      - mcs
-################################################################################
   Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps:
     ImageDir: targets/XilinxKcu1500/Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps/images
     Extensions:
@@ -52,14 +43,11 @@ Releases:
     Primary: True
     Targets:
       #######################################
-      - Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps
-      - Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps
-      #######################################
       - Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps
       - Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps
       #######################################
-      # - Lcls2EpixHrXilinxC1100Pgp4_6Gbps
-      # - Lcls2EpixHrXilinxC1100Pgp4_10Gbps
+      - Lcls2EpixHrXilinxC1100Pgp4_6Gbps
+      - Lcls2EpixHrXilinxC1100Pgp4_10Gbps
       #######################################
     Types:
       - Rogue

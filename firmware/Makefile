@@ -1,6 +1,4 @@
-export TARGET_DIRS  = $(PWD)/targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp4_6Gbps \
-                      $(PWD)/targets/SlacPgpCardG4/Lcls2EpixHrSlacPgpCardG4Pgp4_10Gbps \
-                      $(PWD)/targets/XilinxC1100/Lcls2EpixHrXilinxC1100Pgp4_6Gbps \
+export TARGET_DIRS  = $(PWD)/targets/XilinxC1100/Lcls2EpixHrXilinxC1100Pgp4_6Gbps \
                       $(PWD)/targets/XilinxC1100/Lcls2EpixHrXilinxC1100Pgp4_10Gbps \
                       $(PWD)/targets/XilinxKcu1500/Lcls2EpixHrXilinxKcu1500Pgp4_6Gbps \
                       $(PWD)/targets/XilinxKcu1500/Lcls2EpixHrXilinxKcu1500Pgp4_10Gbps
