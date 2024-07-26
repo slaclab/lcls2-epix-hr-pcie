@@ -63,6 +63,9 @@ class DevRoot(shared.Root):
             initRead    = False if self.sim else initRead,
             **kwargs)
 
+        self.zmqServer = pr.interfaces.ZmqServer(root=self, addr='*', port=9099)
+        self.addInterface(self.zmqServer)
+
         # Unhide the RemoteVariableDump command
         self.RemoteVariableDump.hidden = False
 

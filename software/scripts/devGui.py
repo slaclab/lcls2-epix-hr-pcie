@@ -14,8 +14,6 @@ import sys
 import argparse
 import importlib
 import rogue
-import pyrogue.gui
-import pyrogue.pydm
 
 if __name__ == "__main__":
 
@@ -185,27 +183,18 @@ if __name__ == "__main__":
         # Development PyDM GUI
         ######################
         if (args.guiType == 'PyDM'):
-
+            print("Starting PyDM")
             pyrogue.pydm.runPyDM(
-                root  = root,
-                sizeX = 800,
-                sizeY = 800,
+                serverList  = root.zmqServer.address,
+                sizeX=700,
+                sizeY=800,
             )
 
         #################
         # Legacy PyQT GUI
         #################
         elif (args.guiType == 'PyQt'):
-
-            # Create GUI
-            appTop = pyrogue.gui.application(sys.argv)
-            guiTop = pyrogue.gui.GuiTop()
-            guiTop.addTree(root)
-            guiTop.resize(800, 800)
-
-            # Run gui
-            appTop.exec_()
-            root.stop()
+            print('Not supported anymore')
 
         ####################
         # Undefined GUI type
