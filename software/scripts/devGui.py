@@ -14,6 +14,8 @@ import sys
 import argparse
 import importlib
 import rogue
+import pyrogue
+import pyrogue.pydm
 
 if __name__ == "__main__":
 
@@ -177,6 +179,7 @@ if __name__ == "__main__":
             startupMode    = args.startupMode,
             standAloneMode = args.standAloneMode,
             pcieBoardType  = args.pcieBoardType,
+            serverPort = args.serverPort
         ) as root:
 
         ######################
