@@ -36,10 +36,11 @@ class DevRoot(shared.Root):
                  pollEn         = True,  # Enable automatic polling registers
                  initRead       = True,  # Read all registers at start of the system
                  pcieBoardType  = None,
+                 serverPort     = 9099,
                  **kwargs):
 
         # Set the firmware Version lock = firmware/targets/shared_version.mk
-        self.FwVersionLock = 0x02000000
+        self.FwVersionLock = 0x03000000
 
         # Set local variables
         self.startupMode    = startupMode
@@ -62,6 +63,9 @@ class DevRoot(shared.Root):
             pollEn      = False if self.sim else pollEn,
             initRead    = False if self.sim else initRead,
             **kwargs)
+
+        self.zmqServer = pr.interfaces.ZmqServer(root=self, addr='*', port=serverPort)
+        self.addInterface(self.zmqServer)
 
         # Unhide the RemoteVariableDump command
         self.RemoteVariableDump.hidden = False
