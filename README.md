@@ -156,9 +156,9 @@ $ cat /proc/datadev0
 
 <!--- ######################################################## -->
 
-# How to install the Rogue With Anaconda
+# How to install the Rogue With miniforge
 
-> https://slaclab.github.io/rogue/installing/anaconda.html
+> https://slaclab.github.io/rogue/installing/miniforge.html
 
 <!--- ######################################################## -->
 
