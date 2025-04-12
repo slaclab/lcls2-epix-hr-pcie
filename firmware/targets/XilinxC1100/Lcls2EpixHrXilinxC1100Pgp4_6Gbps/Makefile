@@ -1,3 +1,5 @@
+export PARALLEL_SYNTH = 8
+
 export INCLUDE_PGP4_6G = 1
 
 # Define target part

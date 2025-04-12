@@ -57,6 +57,10 @@ entity Lcls2EpixHrXilinxC1100Pgp4_10Gbps is
       --------------
       --  Core Ports
       --------------
+      -- Card Management Solution (CMS) Interface
+      cmsUartRxd   : in    sl;
+      cmsUartTxd   : out   sl;
+      cmsGpio      : in    slv(3 downto 0);
       -- System Ports
       userClkP     : in    sl;
       userClkN     : in    sl;
@@ -142,6 +146,9 @@ architecture top_level of Lcls2EpixHrXilinxC1100Pgp4_10Gbps is
 
    signal eventTimingMsgMasters : AxiStreamMasterArray(NUM_PGP_LANES_C-1 downto 0) := (others => AXI_STREAM_MASTER_INIT_C);
    signal eventTimingMsgSlaves  : AxiStreamSlaveArray(NUM_PGP_LANES_C-1 downto 0)  := (others => AXI_STREAM_SLAVE_FORCE_C);
+
+   signal cmsHbmCatTrip : sl                    := '0';
+   signal cmsHbmTemp    : Slv7Array(1 downto 0) := (others => b"0000000");
 
 begin
 
@@ -236,6 +243,12 @@ begin
          --------------
          --  Core Ports
          --------------
+         -- Card Management Solution (CMS) Interface
+         cmsHbmCatTrip   => cmsHbmCatTrip,
+         cmsHbmTemp      => cmsHbmTemp,
+         cmsUartRxd      => cmsUartRxd,
+         cmsUartTxd      => cmsUartTxd,
+         cmsGpio         => cmsGpio,
          -- System Ports
          userClkP       => userClkP,
          userClkN       => userClkN,
@@ -285,6 +298,9 @@ begin
          DMA_AXIS_CONFIG_G => DMA_AXIS_CONFIG_C,
          AXIL_BASE_ADDR_G  => AXIL_CONFIG_C(BUFF_INDEX_C).baseAddr)
       port map (
+         -- Card Management Solution (CMS) Interface
+         cmsHbmCatTrip    => cmsHbmCatTrip,
+         cmsHbmTemp       => cmsHbmTemp,
          -- HBM Interface
          hbmRefClk           => hbmRefClk,
          hbmCatTrip          => hbmCatTrip,
