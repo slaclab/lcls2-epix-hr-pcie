@@ -244,11 +244,11 @@ begin
          --  Core Ports
          --------------
          -- Card Management Solution (CMS) Interface
-         cmsHbmCatTrip   => cmsHbmCatTrip,
-         cmsHbmTemp      => cmsHbmTemp,
-         cmsUartRxd      => cmsUartRxd,
-         cmsUartTxd      => cmsUartTxd,
-         cmsGpio         => cmsGpio,
+         cmsHbmCatTrip  => cmsHbmCatTrip,
+         cmsHbmTemp     => cmsHbmTemp,
+         cmsUartRxd     => cmsUartRxd,
+         cmsUartTxd     => cmsUartTxd,
+         cmsGpio        => cmsGpio,
          -- System Ports
          userClkP       => userClkP,
          userClkN       => userClkN,
@@ -299,9 +299,10 @@ begin
          AXIL_BASE_ADDR_G  => AXIL_CONFIG_C(BUFF_INDEX_C).baseAddr)
       port map (
          -- Card Management Solution (CMS) Interface
-         cmsHbmCatTrip    => cmsHbmCatTrip,
-         cmsHbmTemp       => cmsHbmTemp,
+         cmsHbmCatTrip       => cmsHbmCatTrip,
+         cmsHbmTemp          => cmsHbmTemp,
          -- HBM Interface
+         userClk             => userClk,
          hbmRefClk           => hbmRefClk,
          hbmCatTrip          => hbmCatTrip,
          -- AXI-Lite Interface (axilClk domain)
@@ -312,11 +313,11 @@ begin
          axilWriteMaster     => axilWriteMasters(BUFF_INDEX_C),
          axilWriteSlave      => axilWriteSlaves(BUFF_INDEX_C),
          -- Trigger Event streams (eventClk domain)
-         eventClk            => axilClk,
+         eventClk(0)         => axilClk,
          eventTrigMsgCtrl(0) => eventTrigMsgCtrl(0),
          -- AXI Stream Interface (axisClk domain)
-         axisClk             => dmaClk,
-         axisRst             => dmaRst,
+         axisClk             => (others => dmaClk),
+         axisRst             => (others => dmaRst),
          sAxisMasters        => buffIbMasters,
          sAxisSlaves         => buffIbSlaves,
          mAxisMasters        => dmaIbMasters,
