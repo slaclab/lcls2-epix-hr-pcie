@@ -82,8 +82,7 @@ DevRoot:
         TriggerEventManager:
           ###################
           XpmMessageAligner:
-            TxId: 0x0
-            RxId: 0x0
+            TxId: 0x1234cafe
           ###################
           TriggerEventBuffer[:]:
             MasterEnable: False
