@@ -179,7 +179,7 @@ $ python scripts/devGui --pgp4 IS_PGP4_BOOL
 
 # Example of starting up KCU1500 with PGP4 and stand alone mode (locally generated timing)
 ```
-$ python scripts/devGui.py --pcieBoardType Kcu1500 --yamlFileLclsII config/defaults_LCLS-II.yml --standAloneMode 1
+$ python scripts/devGui.py --pcieBoardType XilinxKcu1500 --yamlFileLclsII config/defaults_LCLS-II.yml --standAloneMode 1
 Then execute the StartRun() command to start the triggering
 ```
 
