@@ -215,6 +215,7 @@ begin
    U_Core : entity axi_pcie_core.XilinxVariumC1100Core
       generic map (
          TPD_G                => TPD_G,
+         QSFP_CDR_DISABLE_G   => true,  -- TRUE: 25G CDR doesn't work with this line rate (CDR margin is too large)
          ROGUE_SIM_EN_G       => ROGUE_SIM_EN_G,
          ROGUE_SIM_CH_COUNT_G => 4,     -- 4 Virtual Channels per DMA lane
          BUILD_INFO_G         => BUILD_INFO_G,
